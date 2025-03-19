@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-void filter(int (*fnc)(),int* array,int n){ // * We create the map function by ourselves
+void filter(int (*fnc)(),int* array,int n){ // * We create the filter function by ourselves
 
     for (int i = 0; i < n; i++)
     {
