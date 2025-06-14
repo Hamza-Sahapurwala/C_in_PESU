@@ -56,7 +56,7 @@ int main(int argc, char** argv[]){ // argc will have no. of arguments in command
 
     int* p = (int *)malloc(sizeof(int)); // * Space for 1 int type data is made
 
-    int* p=(int *)calloc(3,sizeof(int)); // * Array of 3 elements for an integer array has been made
+    int* p=(int *)calloc(3,sizeof(int)); // * Array of 3 elements for an integer array has been made which has all values already initialized to 0
 
     int* p = (int*) realloc(p,4); // 4 more extra bytes has been added
 
@@ -71,41 +71,67 @@ int main(int argc, char** argv[]){ // argc will have no. of arguments in command
     FILE *f;
 
     f = fopen("test.csv","w");
+
     const char l[]="Hello";
 
     // EOF error if any of them fail
 
     char b= fgetc(f); // gets a character from file
+
     fputc(b,f); // puts a character into the file
 
     char line[1024];
+
     // String I/O Operations
+
     fgets(line, sizeof(line), f); // get's 1 line worth of data from file
-    fputs(l,f); // puts a string
+
+    fputs(l,f); // puts a string and doesn't auto add a \n
 
     // Formatted Read/Write Operations
+
     fscanf(f,"%[^\n]s",l); // get's a string from file
-    fprintf(f,"%s" ,l); // prints the string on the file
+
+    // ! If we want to add stuff to file with more control, use below
+
+    fprintf(f,"%s\n" ,l); // prints the string on the file (same like printf just that filepointer is the first input argument)
+
+    fprintf(f,l);// above thing can be written like this cause it's a string(but \n won't be added automatically)
+
+    // also doesn't add \n automatically(just like printf)
+
     // The %s is important as it tells the structure of the write/read operations
 
+    // ! Use this for Binary Files
+
     // Block read or write
+
     // Error of Zero for size<=0
+
     struct Student data;
+
     fread(data,int sizeofelementdatatype,int noofelementstoread,f);
+
     fwrite(data,sizeof(struct Student), 1, f); // 1 cause there is 1 struct to write
 
-    // Random access to a file
+    // ! Random access to a file
+
     fseek(f,10,SEEK_CUR); // Tells pointer to move 10 bytes ahead of current position
-    // SEEK_CUR=Current position
+
+    // SEEK_CUR = Current position
     // SEEK_SET = Beginning of file
     // SEEK_END = end of file
+    
     ftell(f); // returns pointer position
+
     rewind(f);// moves file pointer to beginning
 
     // Error Handling in Files
 
     int a = ferror(f); // Returns 1 or 0 depending on file operations (1 if everything is clear, 0 else)
+
     clearerr(f); // clears the error
+
     feof(f); // checks for the end of file marker 
 
     // CSV file handling
